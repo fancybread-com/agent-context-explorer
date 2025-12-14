@@ -2,13 +2,15 @@
 import * as vscode from 'vscode';
 import { Rule } from '../scanner/rulesScanner';
 import { ProjectState } from '../scanner/stateScanner';
+import { Command } from '../scanner/commandsScanner';
 import { ProjectDefinition } from '../types/project';
 
 export interface RulesTreeItem extends vscode.TreeItem {
 	rule?: Rule;
+	commandData?: Command; // Command data (avoiding conflict with TreeItem's command property)
 	stateItem?: any;
 	ruleType?: any;
-	category?: 'rules' | 'state' | 'projects' | 'ruleType';
+	category?: 'rules' | 'state' | 'projects' | 'ruleType' | 'commands';
 	directory?: string;
 	project?: ProjectDefinition;
 }
@@ -18,7 +20,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 	readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
 	constructor(
-		private projectData: Map<string, { rules: Rule[], state: ProjectState }> = new Map(),
+		private projectData: Map<string, { rules: Rule[], state: ProjectState, commands: Command[] }> = new Map(),
 		private projects: ProjectDefinition[] = [],
 		private currentProject: ProjectDefinition | null = null
 	) {}
@@ -32,7 +34,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 	}
 
 	updateData(
-		projectData: Map<string, { rules: Rule[], state: ProjectState }>,
+		projectData: Map<string, { rules: Rule[], state: ProjectState, commands: Command[] }>,
 		projects: ProjectDefinition[],
 		currentProject: ProjectDefinition | null
 	): void {
@@ -81,9 +83,10 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				// Project level: show Rules and State for this specific project
 				const project = element.project;
 
-				// Show Rules and State sections for all projects
+				// Show Rules, State, and Commands sections for all projects
 				const currentProjectData = this.projectData.get(project.id);
 				const rulesCount = currentProjectData?.rules.length || 0;
+				const commandsCount = currentProjectData?.commands.length || 0;
 
 				// Count sections (not individual items)
 				let stateCount = 0;
@@ -110,6 +113,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				}
 
 				const sections = [
+					{ name: 'Commands', id: 'commands', icon: 'terminal', description: `${commandsCount} commands found` },
 					{ name: 'Rules', id: 'rules', icon: 'book', description: `${rulesCount} rules found` },
 					{ name: 'State', id: 'state', icon: 'database', description: `${stateCount} items` }
 				];
@@ -117,7 +121,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				// Add a switch project option for non-active projects
 				const items = sections.map((section) => {
 					const item = new vscode.TreeItem(section.name, vscode.TreeItemCollapsibleState.Collapsed) as RulesTreeItem;
-					item.category = section.id as 'rules' | 'state';
+					item.category = section.id as 'rules' | 'state' | 'commands';
 					item.project = project;
 					item.description = section.description;
 					item.iconPath = new vscode.ThemeIcon(section.icon);
@@ -130,9 +134,43 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 					return item;
 				});
 
-				// No switch option needed - users can expand any project to see its rules and state
+				// No switch option needed - users can expand any project to see its rules, state, and commands
 
 				return items;
+		} else if (element.category === 'commands' && element.project) {
+			// Commands section for specific project
+			const projectData = this.projectData.get(element.project.id);
+			const commands = projectData?.commands || [];
+
+			if (commands.length === 0) {
+				return [{
+					label: 'No commands found',
+					collapsibleState: vscode.TreeItemCollapsibleState.None,
+					description: 'Add commands to .cursor/commands directory'
+				} as RulesTreeItem];
+			}
+
+			// Show all commands in a flat list
+			return commands.map((cmd: Command) => {
+				const item = new vscode.TreeItem(
+					cmd.fileName,
+					vscode.TreeItemCollapsibleState.None
+				) as RulesTreeItem;
+				item.commandData = cmd; // Store Command data for context menu access
+				item.category = 'commands';
+				item.project = element.project;
+				item.tooltip = this.getCommandPreview(cmd.content);
+				item.contextValue = 'command'; // Enable context menu for individual commands
+				item.iconPath = new vscode.ThemeIcon('terminal');
+
+				// Open in editor
+				item.command = {
+					command: 'vscode.open',
+					title: 'Open Command',
+					arguments: [cmd.uri]
+				};
+				return item;
+			});
 		} else if (element.category === 'rules' && element.project) {
 			// Rules section for specific project
 			const projectData = this.projectData.get(element.project.id);
@@ -169,10 +207,10 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				};
 				return item;
 			});
-			} else if (element.category === 'state' && element.project) {
-				// State section for specific project - show categories (basic + enhanced)
-				const projectData = this.projectData.get(element.project.id);
-				const state = projectData?.state;
+		} else if (element.category === 'state' && element.project) {
+			// State section for specific project - show categories (basic + enhanced)
+			const projectData = this.projectData.get(element.project.id);
+			const state = projectData?.state;
 
 				if (!state) {
 					return [{
@@ -627,6 +665,28 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 		}
 
 		return groups;
+	}
+
+	/**
+	 * Generate preview text for command tooltip
+	 * Extracts first heading or first non-empty line from command content
+	 */
+	private getCommandPreview(content: string): string {
+		// Try to find first heading
+		const headingMatch = content.match(/^#+\s+(.+)$/m);
+		if (headingMatch) {
+			return headingMatch[1].trim();
+		}
+
+		// Get first non-empty line
+		const lines = content.split('\n').filter(line => line.trim().length > 0);
+		if (lines.length > 0) {
+			// Remove markdown formatting
+			return lines[0].replace(/^#+\s+/, '').replace(/\*\*/g, '').trim();
+		}
+
+		// Fallback to first 100 chars
+		return content.substring(0, 100).trim();
 	}
 
 }

@@ -4,6 +4,7 @@ import { RulesTreeProvider } from './providers/rulesTreeProvider';
 import { StateSectionContentProvider } from './providers/stateSectionContentProvider';
 import { RulesScanner } from './scanner/rulesScanner';
 import { StateScanner } from './scanner/stateScanner';
+import { CommandsScanner } from './scanner/commandsScanner';
 import { RuleCommands } from './commands/ruleCommands';
 import { StateCommands } from './commands/stateCommands';
 import { ProjectCommands } from './commands/projectCommands';
@@ -12,10 +13,12 @@ import { ProjectManager } from './services/projectManager';
 import { ProjectDefinition } from './types/project';
 import { Rule } from './scanner/rulesScanner';
 import { ProjectState } from './scanner/stateScanner';
+import { Command } from './scanner/commandsScanner';
 
 let treeProvider: RulesTreeProvider;
 let rulesScanner: RulesScanner;
 let stateScanner: StateScanner;
+let commandsScanner: CommandsScanner;
 let projectManager: ProjectManager;
 let fileWatcher: vscode.FileSystemWatcher | undefined;
 let outputChannel: vscode.OutputChannel;
@@ -45,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 		outputChannel.appendLine(`Workspace root found: ${workspaceRoot.fsPath}`);
 		rulesScanner = new RulesScanner(workspaceRoot);
 		stateScanner = new StateScanner(workspaceRoot);
+		commandsScanner = new CommandsScanner(workspaceRoot);
 	} else {
 		outputChannel.appendLine('No workspace root found');
 	}
@@ -130,22 +134,23 @@ async function refreshData() {
 
 		// Always scan the current workspace first
 		const currentWorkspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
-		const projectData = new Map<string, { rules: Rule[], state: ProjectState }>();
+		const projectData = new Map<string, { rules: Rule[], state: ProjectState, commands: Command[] }>();
 
 		if (currentWorkspaceRoot) {
 			outputChannel.appendLine(`Scanning current workspace: ${currentWorkspaceRoot.fsPath}`);
 
-			// Scan current workspace rules and state
-			const [currentRules, currentState] = await Promise.all([
+			// Scan current workspace rules, state, and commands
+			const [currentRules, currentState, currentCommands] = await Promise.all([
 				rulesScanner?.scanRules() || Promise.resolve([]),
-				stateScanner?.scanState() || Promise.resolve({ languages: [], frameworks: [], dependencies: [], buildTools: [], testing: [], codeQuality: [], developmentTools: [], architecture: [], configuration: [], documentation: [] })
+				stateScanner?.scanState() || Promise.resolve({ languages: [], frameworks: [], dependencies: [], buildTools: [], testing: [], codeQuality: [], developmentTools: [], architecture: [], configuration: [], documentation: [] }),
+				commandsScanner?.scanWorkspaceCommands() || Promise.resolve([])
 			]);
 
 			// Use workspace path as the key for current workspace
 			const workspaceKey = 'current-workspace';
-			projectData.set(workspaceKey, { rules: currentRules, state: currentState });
+			projectData.set(workspaceKey, { rules: currentRules, state: currentState, commands: currentCommands });
 
-			const logMessage = `Scanned current workspace: ${currentRules.length} rules, ${currentState.languages.length + currentState.frameworks.length + currentState.dependencies.length + currentState.buildTools.length + currentState.testing.length + currentState.codeQuality.length + currentState.developmentTools.length + currentState.architecture.length + currentState.configuration.length + currentState.documentation.length} state items`;
+			const logMessage = `Scanned current workspace: ${currentRules.length} rules, ${currentState.languages.length + currentState.frameworks.length + currentState.dependencies.length + currentState.buildTools.length + currentState.testing.length + currentState.codeQuality.length + currentState.developmentTools.length + currentState.architecture.length + currentState.configuration.length + currentState.documentation.length} state items, ${currentCommands.length} commands`;
 			outputChannel.appendLine(logMessage);
 		}
 
@@ -166,15 +171,17 @@ async function refreshData() {
 				const projectUri = vscode.Uri.file(project.path);
 				const projectRulesScanner = new RulesScanner(projectUri);
 				const projectStateScanner = new StateScanner(projectUri);
+				const projectCommandsScanner = new CommandsScanner(projectUri);
 
-				// Scan rules and state for this project
-				const [rules, state] = await Promise.all([
+				// Scan rules, state, and commands for this project
+				const [rules, state, commands] = await Promise.all([
 					projectRulesScanner.scanRules(),
-					projectStateScanner.scanState()
+					projectStateScanner.scanState(),
+					projectCommandsScanner.scanWorkspaceCommands()
 				]);
 
-				projectData.set(project.id, { rules, state });
-				const logMessage = `Scanned project ${project.name}: ${rules.length} rules, ${state.languages.length + state.frameworks.length + state.dependencies.length + state.buildTools.length + state.testing.length + state.codeQuality.length + state.developmentTools.length + state.architecture.length + state.configuration.length + state.documentation.length} state items`;
+				projectData.set(project.id, { rules, state, commands });
+				const logMessage = `Scanned project ${project.name}: ${rules.length} rules, ${state.languages.length + state.frameworks.length + state.dependencies.length + state.buildTools.length + state.testing.length + state.codeQuality.length + state.developmentTools.length + state.architecture.length + state.configuration.length + state.documentation.length} state items, ${commands.length} commands`;
 				outputChannel.appendLine(logMessage);
 			} catch (error) {
 				const errorMessage = `Error scanning project ${project.name}: ${error}`;
@@ -198,7 +205,8 @@ async function refreshData() {
 						architecture: [],
 						configuration: [],
 						documentation: []
-					}
+					},
+					commands: []
 				});
 			}
 		}

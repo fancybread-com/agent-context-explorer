@@ -2,7 +2,7 @@
 	"name": "project-rules-explorer",
 	"displayName": "Project Rules Explorer",
 	"description": "Visualize and manage Cursor project rules and state with enhanced detection",
-	"version": "0.7.0",
+	"version": "0.7.2",
 	"publisher": "fancybread-com",
 	"icon": "pre.png",
 	"repository": {
@@ -10,7 +10,7 @@
 		"url": "https://github.com/fancybread-com/project-rules-explorer"
 	},
 	"engines": {
-		"vscode": "^1.74.0"
+		"vscode": "^1.105.0"
 	},
 	"categories": [
 		"Other",
@@ -45,7 +45,7 @@
 			"project-rules": [
 				{
 					"id": "projectRulesExplorer",
-					"name": "Rules & State",
+					"name": "Commands, Rules & State",
 					"when": "workspaceFolderCount > 0"
 				}
 			]
@@ -235,7 +235,7 @@
 	"devDependencies": {
 		"@types/mocha": "^10.0.0",
 		"@types/node": "^24.10.0",
-		"@types/vscode": "^1.106.1",
+		"@types/vscode": "^1.105.0",
 		"@typescript-eslint/eslint-plugin": "^8.46.3",
 		"@typescript-eslint/parser": "^8.46.3",
 		"@vscode/test-electron": "^2.3.0",
