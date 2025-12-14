@@ -230,7 +230,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				item.project = element.project;
 				item.tooltip = `${this.getCommandPreview(cmd.content)} (Global)`;
 				item.contextValue = 'command';
-				item.iconPath = new vscode.ThemeIcon('globe');
+				item.iconPath = new vscode.ThemeIcon('terminal');
 
 				item.command = {
 					command: 'vscode.open',

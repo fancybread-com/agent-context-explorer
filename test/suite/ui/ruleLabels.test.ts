@@ -378,7 +378,7 @@ describe('Rule Labels Removal', () => {
 			const globalTooltip = typeof globalCommands[0].tooltip === 'string' ? globalCommands[0].tooltip : globalCommands[0].tooltip?.value;
 			assert.ok(globalTooltip?.includes('(Global)'));
 			const globalIcon = typeof globalCommands[0].iconPath === 'object' && globalCommands[0].iconPath !== null ? (globalCommands[0].iconPath as any).id : null;
-			assert.strictEqual(globalIcon, 'globe');
+			assert.strictEqual(globalIcon, 'terminal');
 		});
 
 		it('should show empty state for workspace commands when none exist', async () => {
