@@ -113,9 +113,9 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				}
 
 				const sections = [
+					{ name: 'Commands', id: 'commands', icon: 'terminal', description: `${commandsCount} commands found` },
 					{ name: 'Rules', id: 'rules', icon: 'book', description: `${rulesCount} rules found` },
-					{ name: 'State', id: 'state', icon: 'database', description: `${stateCount} items` },
-					{ name: 'Commands', id: 'commands', icon: 'terminal', description: `${commandsCount} commands found` }
+					{ name: 'State', id: 'state', icon: 'database', description: `${stateCount} items` }
 				];
 
 				// Add a switch project option for non-active projects
