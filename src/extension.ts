@@ -1,5 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode';
+import * as os from 'os';
+import * as path from 'path';
 import { RulesTreeProvider } from './providers/rulesTreeProvider';
 import { StateSectionContentProvider } from './providers/stateSectionContentProvider';
 import { RulesScanner } from './scanner/rulesScanner';
@@ -93,6 +95,13 @@ export function activate(context: vscode.ExtensionContext) {
 	if (workspaceRoot) {
 		outputChannel.appendLine('Setting up file watcher...');
 		setupFileWatcher();
+	}
+
+	// Always set up global commands watcher (workspace-independent)
+	outputChannel.appendLine('Setting up global commands file watcher...');
+	const globalCommandsWatcher = setupGlobalCommandsWatcher();
+	if (globalCommandsWatcher) {
+		context.subscriptions.push(globalCommandsWatcher);
 	}
 
 	// Initial data load (non-blocking)
@@ -297,4 +306,36 @@ function setupFileWatcher() {
 			commandsWatcher.dispose();
 		}
 	} as vscode.FileSystemWatcher;
+}
+
+function setupGlobalCommandsWatcher(): vscode.FileSystemWatcher | undefined {
+	// Watch for changes in global .cursor/commands directory
+	try {
+		const homeDir = os.homedir();
+		const globalCommandsPattern = path.join(homeDir, '.cursor', 'commands', '*.md');
+		const globalCommandsWatcher = vscode.workspace.createFileSystemWatcher(globalCommandsPattern);
+
+		// Global commands watcher handlers
+		globalCommandsWatcher.onDidCreate(() => {
+			outputChannel.appendLine('Global command file created, refreshing...');
+			refreshData();
+		});
+
+		globalCommandsWatcher.onDidChange(() => {
+			outputChannel.appendLine('Global command file changed, refreshing...');
+			refreshData();
+		});
+
+		globalCommandsWatcher.onDidDelete(() => {
+			outputChannel.appendLine('Global command file deleted, refreshing...');
+			refreshData();
+		});
+
+		outputChannel.appendLine('Global commands file watcher created successfully');
+		return globalCommandsWatcher;
+	} catch (error) {
+		outputChannel.appendLine(`Unable to watch global commands directory: ${error instanceof Error ? error.message : String(error)}`);
+		// Continue without global commands watcher - extension still functions
+		return undefined;
+	}
 }
