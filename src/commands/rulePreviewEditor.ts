@@ -359,7 +359,7 @@ export class RulePreviewEditor {
 	}
 
 	static registerCommands(context: vscode.ExtensionContext): void {
-		const openRulePreview = vscode.commands.registerCommand('projectRules.openRulePreview', (rule: Rule) => {
+		const openRulePreview = vscode.commands.registerCommand('ace.openRulePreview', (rule: Rule) => {
 			RulePreviewEditor.createOrShow(rule);
 		});
 

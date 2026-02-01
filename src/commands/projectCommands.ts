@@ -57,7 +57,7 @@ export class ProjectCommands {
 		const projectManager = new ProjectManager(context);
 
 		// Add Project command
-		const addProject = vscode.commands.registerCommand('projectRules.addProject', async () => {
+		const addProject = vscode.commands.registerCommand('ace.addProject', async () => {
 			try {
 				// Get project name
 				const name = await vscode.window.showInputBox({
@@ -108,7 +108,7 @@ export class ProjectCommands {
 
 
 		// Remove Project command
-		const removeProject = vscode.commands.registerCommand('projectRules.removeProject', async (project: ProjectDefinition) => {
+		const removeProject = vscode.commands.registerCommand('ace.removeProject', async (project: ProjectDefinition) => {
 			try {
 				const result = await vscode.window.showWarningMessage(
 					`Are you sure you want to remove project "${project.name}"?`,
@@ -120,7 +120,7 @@ export class ProjectCommands {
 					vscode.window.showInformationMessage(`Project removed: ${project.name}`);
 
 					// Refresh the tree view
-					vscode.commands.executeCommand('projectRules.refresh');
+					vscode.commands.executeCommand('ace.refresh');
 				}
 			} catch (e: any) {
 				vscode.window.showErrorMessage(`Failed to remove project: ${e?.message || e}`);
@@ -128,7 +128,7 @@ export class ProjectCommands {
 		});
 
 		// Edit Project command
-		const editProject = vscode.commands.registerCommand('projectRules.editProject', async (project: ProjectDefinition) => {
+		const editProject = vscode.commands.registerCommand('ace.editProject', async (project: ProjectDefinition) => {
 			try {
 				// Get updated name
 				const name = await vscode.window.showInputBox({
@@ -158,14 +158,14 @@ export class ProjectCommands {
 				vscode.window.showInformationMessage(`Project updated: ${name}`);
 
 				// Refresh the tree view
-				vscode.commands.executeCommand('projectRules.refresh');
+				vscode.commands.executeCommand('ace.refresh');
 			} catch (e: any) {
 				vscode.window.showErrorMessage(`Failed to edit project: ${e?.message || e}`);
 			}
 		});
 
 		// List Projects command
-		const listProjects = vscode.commands.registerCommand('projectRules.listProjects', async () => {
+		const listProjects = vscode.commands.registerCommand('ace.listProjects', async () => {
 			try {
 				const projects = await projectManager.getProjects();
 				const currentProject = await projectManager.getCurrentProject();
@@ -199,7 +199,7 @@ ${projectList}
 		});
 
 		// Export All Projects for Agent command
-		const exportForAgent = vscode.commands.registerCommand('projectRules.exportForAgent', async () => {
+		const exportForAgent = vscode.commands.registerCommand('ace.exportForAgent', async () => {
 			try {
 				const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
 				if (!workspaceRoot) {

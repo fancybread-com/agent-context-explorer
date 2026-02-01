@@ -65,7 +65,7 @@ class MockExtension {
 			this.treeProvider = new MockRulesTreeProvider(this.projectManager);
 
 			// Create tree view
-			this.treeView = mockVscode.window.createTreeView('projectRulesExplorer', {
+			this.treeView = mockVscode.window.createTreeView('aceExplorer', {
 				treeDataProvider: this.treeProvider
 			});
 
@@ -86,7 +86,7 @@ class MockExtension {
 			this.subscriptions.push(workspaceChangeListener);
 
 			this.isActive = true;
-			mockVscode.window.showInformationMessage('Project Rules Explorer activated');
+			mockVscode.window.showInformationMessage('Agent Context Explorer activated');
 		} catch (error) {
 			mockVscode.window.showErrorMessage(`Failed to activate extension: ${error}`);
 			throw error;
@@ -132,7 +132,7 @@ class MockExtension {
 			}
 
 			this.isActive = false;
-			mockVscode.window.showInformationMessage('Project Rules Explorer deactivated');
+			mockVscode.window.showInformationMessage('Agent Context Explorer deactivated');
 		} catch (error) {
 			mockVscode.window.showErrorMessage(`Failed to deactivate extension: ${error}`);
 		}
@@ -140,17 +140,17 @@ class MockExtension {
 
 	private registerCommands(): void {
 		const commands = [
-			'projectRules.refresh',
-			'projectRules.addProject',
-			'projectRules.editProject',
-			'projectRules.removeProject',
-			'projectRules.createRule',
-			'projectRules.editRule',
-			'projectRules.deleteRule',
-			'projectRules.viewRule',
-			'projectRules.renameRule',
-			'projectRules.copyRule',
-			'projectRules.pasteRule'
+			'ace.refresh',
+			'ace.addProject',
+			'ace.editProject',
+			'ace.removeProject',
+			'ace.createRule',
+			'ace.editRule',
+			'ace.deleteRule',
+			'ace.viewRule',
+			'ace.renameRule',
+			'ace.copyRule',
+			'ace.pasteRule'
 		];
 
 		commands.forEach(command => {
@@ -513,7 +513,7 @@ describe('Extension Lifecycle Tests', () => {
 				if (callCount === 1) {
 					throw new Error('Tree view creation failed');
 				}
-				return originalCreateTreeView('projectRulesExplorer', { treeDataProvider: {} });
+				return originalCreateTreeView('aceExplorer', { treeDataProvider: {} });
 			};
 
 			try {

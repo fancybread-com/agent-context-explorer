@@ -1,13 +1,21 @@
-# Project Rules Explorer
+# Agent Context Explorer (ACE)
 
-**Visualize and manage Cursor project rules with intelligent state detection**
+**Provide rich project context to AI agents across multiple workspaces**
 
-A VS Code extension that provides a comprehensive view of your Cursor rules and automatically analyzes your project structure, dependencies, and architecture to help AI agents better understand your codebase.
+A VS Code extension that helps AI agents understand your projects by visualizing Cursor rules, commands, and project state in one place. Manage context across multiple codebases and export comprehensive project intelligence for better AI-assisted development.
+
+*Supports ASDLC (Agentic Software Development Life Cycle) workflows for teams adopting structured AI-assisted development practices.*
 
 ## Key Features
 
-### **Rules Management**
+### **Multi-Project Context Management**
+- Manage context across multiple projects from a single workspace
 - Browse all `.cursor/rules` files in an organized tree view
+- View workspace and global Cursor commands
+- Inspect project state and configuration
+- Export comprehensive context for AI agents
+
+### **Rules Management**
 - Create, edit, and delete rules with a visual interface
 - Copy and paste rules between projects
 - Auto-refresh when files change
@@ -18,7 +26,6 @@ A VS Code extension that provides a comprehensive view of your Cursor rules and 
 - Detects dependencies and explains their purpose
 - Identifies frameworks, databases, and infrastructure
 - Provides AI-optimized project insights
-- Exports comprehensive project context for agents
 
 ### **Commands Management**
 - Browse workspace and global Cursor commands in tree view
@@ -36,16 +43,16 @@ A VS Code extension that provides a comprehensive view of your Cursor rules and 
 
 ### Installation
 
-1. Install from the VS Code marketplace (search for "Project Rules Explorer")
+1. Install from the VS Code marketplace (search for "Agent Context Explorer")
 2. Open a workspace containing a `.cursor/rules` directory
 3. The extension will automatically activate and display in the sidebar
 
 ### Quick Start
 
-1. **View Rules**: Click the Project Rules icon in the sidebar to see all your Cursor rules
+1. **View Rules**: Click the Agent Context Explorer icon in the sidebar to see all your Cursor rules
 2. **View Commands**: Expand the Commands section to see workspace and global commands
 3. **Create a Rule**: Click the `+` button or right-click in the Rules section
-4. **Export for Agents**: Click the Export button to generate `.cursor/project-rules-export.json`
+4. **Export for Agents**: Click the Export button to generate `.cursor/ace-export.json`
 
 ## Usage Guide
 
@@ -161,7 +168,7 @@ Provides context-aware suggestions:
 The Export feature creates a comprehensive JSON file that AI agents can read:
 
 1. Click the **Export** button in the tree view
-2. File is saved to `.cursor/project-rules-export.json`
+2. File is saved to `.cursor/ace-export.json`
 3. AI agents automatically have access to:
    - All project rules (always-apply and conditional)
    - Workspace and global commands (title and overview)
@@ -243,7 +250,7 @@ Click any state section to see detailed information:
 - **Project Structure**: Architecture and configuration
 
 ### **View State Command**
-Run "Project Rules: View State" from the command palette to see a comprehensive markdown report of all project analysis.
+Run "ACE: View State" from the command palette to see a comprehensive markdown report of all project analysis.
 
 ## Tips & Best practices
 
@@ -285,14 +292,14 @@ Run "Project Rules: View State" from the command palette to see a comprehensive 
 - Click refresh button to force update
 
 **State detection incomplete?**
-- Run "Project Rules: Scan Project State" command
+- Run "ACE: Scan Project State" command
 - Ensure package.json exists for dependency analysis
 - Check that project structure follows conventions
 
 **Export not working?**
 - Verify workspace has write permissions
 - Check `.cursor/` directory exists
-- Look for errors in Output panel (View → Output → Project Rules Explorer)
+- Look for errors in Output panel (View → Output → Agent Context Explorer)
 
 ## Contributing
 

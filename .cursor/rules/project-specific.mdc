@@ -1,10 +1,10 @@
 ---
-description: Specific rules for the Project Rules Explorer extension
+description: Specific rules for the Agent Context Explorer (ACE) extension
 globs: ["**/*.ts", "**/*.js", "package.json"]
 alwaysApply: true
 ---
 
-# Project Rules Explorer Specific Guidelines
+# Agent Context Explorer (ACE) Specific Guidelines
 
 ## MDC File Handling
 

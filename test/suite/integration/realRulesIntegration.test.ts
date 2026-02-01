@@ -97,8 +97,8 @@ describe('Real Rules Integration Tests', () => {
 	before(async () => {
 		// Create a mock project that points to the actual repository
 		mockProject = {
-			id: 'project-rules-explorer',
-			name: 'Project Rules Explorer',
+			id: 'agent-context-explorer',
+			name: 'Agent Context Explorer',
 			path: __dirname + '/../..',
 			active: true,
 			description: 'Real project for testing',
@@ -112,7 +112,7 @@ describe('Real Rules Integration Tests', () => {
 
 		// Create project data with real rules
 		const projectData = new Map();
-		projectData.set('project-rules-explorer', {
+		projectData.set('agent-context-explorer', {
 			rules: realRules,
 			state: {
 				languages: ['TypeScript'],
@@ -246,7 +246,7 @@ describe('Real Rules Integration Tests', () => {
 			// Get the project tree item
 			const projectItems = await provider.getChildren();
 			assert.strictEqual(projectItems.length, 1);
-			assert.strictEqual(projectItems[0].label, 'Project Rules Explorer');
+			assert.strictEqual(projectItems[0].label, 'Agent Context Explorer');
 
 			// Get the rules section
 			const rulesSection = await provider.getChildren(projectItems[0]);
