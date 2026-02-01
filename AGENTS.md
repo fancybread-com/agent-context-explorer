@@ -1,17 +1,17 @@
 # AGENTS.md - Context & Rules for AI Agents
 
-> **Project Mission:** Visualize and manage Cursor project rules, commands, and state with intelligent detection to help AI agents understand codebases.
-> **Core Philosophy:** Provide explicit, reliable project context through intentional artifacts (rules, commands, AGENTS.md, specs) rather than optimistic inference. Support both traditional and ASDLC workflows.
-> **ASDLC Alignment:** This project supports ASDLC patterns by scanning explicit artifacts (AGENTS.md, specs/, schemas/) and providing reliable project context for AI agents.
+> **Project Mission:** Provide rich project context to AI agents across multiple workspaces, enabling better AI-assisted development.
+> **Core Philosophy:** Provide explicit, reliable project context through intentional artifacts (rules, commands, AGENTS.md, specs) rather than optimistic inference. Support both traditional and structured AI-assisted workflows.
+> **ASDLC Support:** This project supports ASDLC (Agentic Software Development Life Cycle) patterns by scanning explicit artifacts and providing reliable project context for AI agents.
 
 ---
 
 ## 1. Identity & Persona
 
 - **Role:** VS Code Extension Developer
-- **Specialization:** Cursor rules management, project state visualization, ASDLC artifact scanning
+- **Specialization:** Multi-project context management, Cursor rules visualization, project state detection
 - **Objective:** Help developers and AI agents understand project context through explicit artifacts and intelligent visualization
-- **Core Competency:** Scanning and presenting project rules, commands, and ASDLC artifacts in a clear, organized way
+- **Core Competency:** Scanning and presenting project rules, commands, and project artifacts across multiple workspaces
 
 ---
 
@@ -97,18 +97,18 @@ ASDLC Artifact Scanning **MUST**:
 
 | Intent | Command | Notes |
 |--------|---------|-------|
-| **View Rules** | `projectRules.viewRule` | Open rule in preview editor |
-| **Create Rule** | `projectRules.createRule` | Create new rule file |
-| **Edit Rule** | `projectRules.editRule` | Edit existing rule |
-| **Delete Rule** | `projectRules.deleteRule` | Delete rule file |
-| **Copy Rule** | `projectRules.copyRule` | Copy rule to clipboard |
-| **Paste Rule** | `projectRules.pasteRule` | Paste rule from clipboard |
-| **Rename Rule** | `projectRules.renameRule` | Rename rule file |
-| **View State** | `projectRules.viewState` | View project state analysis |
-| **Export for Agent** | `projectRules.exportForAgent` | Export rules, commands, state to JSON |
-| **Add Project** | `projectRules.addProject` | Add external project to tree view |
-| **Remove Project** | `projectRules.removeProject` | Remove project from tree view |
-| **Refresh** | `projectRules.refresh` | Refresh tree view data |
+| **View Rules** | `ace.viewRule` | Open rule in preview editor |
+| **Create Rule** | `ace.createRule` | Create new rule file |
+| **Edit Rule** | `ace.editRule` | Edit existing rule |
+| **Delete Rule** | `ace.deleteRule` | Delete rule file |
+| **Copy Rule** | `ace.copyRule` | Copy rule to clipboard |
+| **Paste Rule** | `ace.pasteRule` | Paste rule from clipboard |
+| **Rename Rule** | `ace.renameRule` | Rename rule file |
+| **View State** | `ace.viewState` | View project state analysis |
+| **Export for Agent** | `ace.exportForAgent` | Export rules, commands, state to JSON |
+| **Add Project** | `ace.addProject` | Add external project to tree view |
+| **Remove Project** | `ace.removeProject` | Remove project from tree view |
+| **Refresh** | `ace.refresh` | Refresh tree view data |
 
 ---
 
@@ -172,5 +172,5 @@ This project scans for and uses:
 ---
 
 **Status**: Active  
-**Last Updated**: 2026-01-26  
+**Last Updated**: 2026-02-01  
 **Pattern**: ASDLC "Agent Constitution" + explicit artifact scanning

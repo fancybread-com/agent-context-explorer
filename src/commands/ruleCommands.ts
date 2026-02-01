@@ -8,7 +8,7 @@ export class RuleCommands {
 	static registerCommands(context: vscode.ExtensionContext): void {
 
 		// Create Rule command
-		const createRule = vscode.commands.registerCommand('projectRules.createRule', async (treeItem?: RulesTreeItem) => {
+		const createRule = vscode.commands.registerCommand('ace.createRule', async (treeItem?: RulesTreeItem) => {
 			try {
 
 				// Get the project context from the tree item
@@ -100,7 +100,7 @@ Describe your rule here.
 
 
 		// Delete Rule command
-		const deleteRule = vscode.commands.registerCommand('projectRules.deleteRule', async (rule: Rule | RulesTreeItem) => {
+		const deleteRule = vscode.commands.registerCommand('ace.deleteRule', async (rule: Rule | RulesTreeItem) => {
 			try {
 				// Debug logging
 
@@ -151,7 +151,7 @@ Describe your rule here.
 		});
 
 		// Copy Rule command
-		const copyRule = vscode.commands.registerCommand('projectRules.copyRule', async (rule: Rule | RulesTreeItem) => {
+		const copyRule = vscode.commands.registerCommand('ace.copyRule', async (rule: Rule | RulesTreeItem) => {
 			try {
 				// Debug logging
 
@@ -197,7 +197,7 @@ Describe your rule here.
 
 
 		// Rename Rule command
-		const renameRule = vscode.commands.registerCommand('projectRules.renameRule', async (rule: Rule | RulesTreeItem) => {
+		const renameRule = vscode.commands.registerCommand('ace.renameRule', async (rule: Rule | RulesTreeItem) => {
 			try {
 				// Debug logging
 
@@ -274,7 +274,7 @@ Describe your rule here.
 		});
 
 		// Paste Rule command
-		const pasteRule = vscode.commands.registerCommand('projectRules.pasteRule', async (treeItem?: RulesTreeItem) => {
+		const pasteRule = vscode.commands.registerCommand('ace.pasteRule', async (treeItem?: RulesTreeItem) => {
 			try {
 
 				// Get content from clipboard

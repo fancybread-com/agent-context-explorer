@@ -3,8 +3,8 @@ import * as vscode from 'vscode';
 import { ProjectDefinition, ProjectRegistry } from '../types/project';
 
 export class ProjectManager {
-	private static readonly STORAGE_KEY = 'projectRulesExplorer.projects';
-	private static readonly CURRENT_PROJECT_KEY = 'projectRulesExplorer.currentProject';
+	private static readonly STORAGE_KEY = 'aceExplorer.projects';
+	private static readonly CURRENT_PROJECT_KEY = 'aceExplorer.currentProject';
 
 	constructor(private context: vscode.ExtensionContext) {}
 

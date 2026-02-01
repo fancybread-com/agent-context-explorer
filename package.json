@@ -1,13 +1,13 @@
 {
-	"name": "project-rules-explorer",
-	"displayName": "Project Rules Explorer",
-	"description": "Visualize and manage Cursor project rules, commands, and state with enhanced detection",
-	"version": "0.8.0",
+	"name": "agent-context-explorer",
+	"displayName": "Agent Context Explorer (ACE)",
+	"description": "Provide rich project context to AI agents across multiple workspaces",
+	"version": "0.8.1",
 	"publisher": "fancybread-com",
 	"icon": "pre.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/fancybread-com/project-rules-explorer"
+		"url": "https://github.com/fancybread-com/agent-context-explorer"
 	},
 	"engines": {
 		"vscode": "^1.105.0"
@@ -17,35 +17,34 @@
 		"Visualization"
 	],
 	"keywords": [
+		"context",
+		"agents",
 		"cursor",
 		"rules",
-		"commands",
-		"project",
-		"visualization",
-		"mdc"
+		"multi-project"
 	],
 	"activationEvents": [
-		"onView:projectRulesExplorer",
-		"onCommand:projectRules.addProject",
-		"onCommand:projectRules.refresh",
-		"onCommand:projectRules.listProjects",
-		"onCommand:projectRules.exportForAgent"
+		"onView:aceExplorer",
+		"onCommand:ace.addProject",
+		"onCommand:ace.refresh",
+		"onCommand:ace.listProjects",
+		"onCommand:ace.exportForAgent"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "project-rules",
-					"title": "Project Rules Explorer",
+					"id": "ace",
+					"title": "Agent Context Explorer",
 					"icon": "$(preview)"
 				}
 			]
 		},
 		"views": {
-			"project-rules": [
+			"ace": [
 				{
-					"id": "projectRulesExplorer",
+					"id": "aceExplorer",
 					"name": "Commands, Rules & State",
 					"when": "workspaceFolderCount > 0"
 				}
@@ -53,92 +52,92 @@
 		},
 		"commands": [
 			{
-				"command": "projectRules.createRule",
+				"command": "ace.createRule",
 				"title": "Create Rule",
 				"icon": "$(add)"
 			},
 			{
-				"command": "projectRules.deleteRule",
+				"command": "ace.deleteRule",
 				"title": "Delete Rule",
 				"icon": "$(trash)"
 			},
 			{
-				"command": "projectRules.copyRule",
+				"command": "ace.copyRule",
 				"title": "Copy Rule",
 				"icon": "$(copy)"
 			},
 			{
-				"command": "projectRules.renameRule",
+				"command": "ace.renameRule",
 				"title": "Rename Rule",
 				"icon": "$(edit)"
 			},
 			{
-				"command": "projectRules.pasteRule",
+				"command": "ace.pasteRule",
 				"title": "Paste Rule",
 				"icon": "$(paste)"
 			},
 			{
-				"command": "projectRules.refresh",
+				"command": "ace.refresh",
 				"title": "Refresh",
 				"icon": "$(refresh)"
 			},
 			{
-				"command": "projectRules.scanState",
+				"command": "ace.scanState",
 				"title": "Scan Project State",
 				"icon": "$(search)"
 			},
 			{
-				"command": "projectRules.viewState",
+				"command": "ace.viewState",
 				"title": "View State",
 				"icon": "$(info)"
 			},
 			{
-				"command": "projectRules.viewStateSection",
+				"command": "ace.viewStateSection",
 				"title": "View State Section",
 				"icon": "$(eye)"
 			},
 			{
-				"command": "projectRules.exportState",
+				"command": "ace.exportState",
 				"title": "Export State",
 				"icon": "$(export)"
 			},
 			{
-				"command": "projectRules.addProject",
+				"command": "ace.addProject",
 				"title": "Add Project",
 				"icon": "$(add)"
 			},
 			{
-				"command": "projectRules.removeProject",
+				"command": "ace.removeProject",
 				"title": "Remove Project",
 				"icon": "$(trash)"
 			},
 			{
-				"command": "projectRules.editProject",
+				"command": "ace.editProject",
 				"title": "Edit Project",
 				"icon": "$(edit)"
 			},
 			{
-				"command": "projectRules.listProjects",
+				"command": "ace.listProjects",
 				"title": "List Projects",
 				"icon": "$(list)"
 			},
 			{
-				"command": "projectRules.exportForAgent",
+				"command": "ace.exportForAgent",
 				"title": "Export All for Agent",
 				"icon": "$(export)"
 			},
 			{
-				"command": "projectRules.deleteRule",
+				"command": "ace.deleteRule",
 				"title": "Delete Rule",
 				"icon": "$(trash)"
 			},
 			{
-				"command": "projectRules.copyRule",
+				"command": "ace.copyRule",
 				"title": "Copy Rule",
 				"icon": "$(copy)"
 			},
 			{
-				"command": "projectRules.pasteRule",
+				"command": "ace.pasteRule",
 				"title": "Paste Rule",
 				"icon": "$(paste)"
 			}
@@ -146,75 +145,75 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "projectRules.refresh",
-					"when": "view == projectRulesExplorer",
+					"command": "ace.refresh",
+					"when": "view == aceExplorer",
 					"group": "navigation"
 				},
 				{
-					"command": "projectRules.addProject",
-					"when": "view == projectRulesExplorer",
+					"command": "ace.addProject",
+					"when": "view == aceExplorer",
 					"group": "navigation"
 				},
 				{
-					"command": "projectRules.exportForAgent",
-					"when": "view == projectRulesExplorer",
+					"command": "ace.exportForAgent",
+					"when": "view == aceExplorer",
 					"group": "navigation"
 				}
 			],
 			"view/item/context": [
 				{
-					"command": "projectRules.viewRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.viewRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.editRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.editRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.copyRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.copyRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.deleteRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.deleteRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.editProject",
-					"when": "view == projectRulesExplorer && viewItem == activeProject",
+					"command": "ace.editProject",
+					"when": "view == aceExplorer && viewItem == activeProject",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.removeProject",
-					"when": "view == projectRulesExplorer && viewItem == activeProject",
+					"command": "ace.removeProject",
+					"when": "view == aceExplorer && viewItem == activeProject",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.createRule",
-					"when": "view == projectRulesExplorer && viewItem == rules",
+					"command": "ace.createRule",
+					"when": "view == aceExplorer && viewItem == rules",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.pasteRule",
-					"when": "view == projectRulesExplorer && viewItem == rules",
+					"command": "ace.pasteRule",
+					"when": "view == aceExplorer && viewItem == rules",
 					"group": "inline"
 				},
 				{
-					"command": "projectRules.copyRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.copyRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "1_actions"
 				},
 				{
-					"command": "projectRules.renameRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.renameRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "1_actions"
 				},
 				{
-					"command": "projectRules.deleteRule",
-					"when": "view == projectRulesExplorer && viewItem == rule",
+					"command": "ace.deleteRule",
+					"when": "view == aceExplorer && viewItem == rule",
 					"group": "1_actions"
 				}
 			]

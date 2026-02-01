@@ -9,7 +9,7 @@ export class StateCommands {
 	static registerCommands(context: vscode.ExtensionContext, contentProvider: StateSectionContentProvider): void {
 		this.contentProvider = contentProvider;
 		// Scan State command
-		const scanState = vscode.commands.registerCommand('projectRules.scanState', async () => {
+		const scanState = vscode.commands.registerCommand('ace.scanState', async () => {
 			try {
 				const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
 				if (!workspaceRoot) {
@@ -30,7 +30,7 @@ export class StateCommands {
 		});
 
 		// View State command
-		const viewState = vscode.commands.registerCommand('projectRules.viewState', async () => {
+		const viewState = vscode.commands.registerCommand('ace.viewState', async () => {
 			try {
 				const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
 				if (!workspaceRoot) {
@@ -56,7 +56,7 @@ export class StateCommands {
 		});
 
 		// Export State command
-		const exportState = vscode.commands.registerCommand('projectRules.exportState', async () => {
+		const exportState = vscode.commands.registerCommand('ace.exportState', async () => {
 			try {
 				const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
 				if (!workspaceRoot) {
@@ -91,7 +91,7 @@ export class StateCommands {
 
 		// View State Section command - opens individual state sections in a view
 		const viewStateSection = vscode.commands.registerCommand(
-			'projectRules.viewStateSection',
+			'ace.viewStateSection',
 			async (sectionKey: string, sectionData: any, project: any) => {
 				try {
 					const content = this.generateStateSectionMarkdown(sectionKey, sectionData, project);

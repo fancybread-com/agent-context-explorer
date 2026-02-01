@@ -1,6 +1,6 @@
-# Project Rules Explorer - Test Suite
+# Agent Context Explorer (ACE) - Test Suite
 
-This directory contains comprehensive tests for the Project Rules Explorer VS Code extension, covering all major functionality including rule management, project state detection, tree view operations, and extension lifecycle.
+This directory contains comprehensive tests for the Agent Context Explorer VS Code extension, covering all major functionality including rule management, project state detection, tree view operations, and extension lifecycle.
 
 ## Test Organization
 
@@ -244,4 +244,4 @@ When adding new tests:
 **Coverage Areas**: 20+ major functionality areas
 **Test Quality**: Comprehensive with positive, negative, and edge case testing
 
-The test suite provides robust coverage of all extension functionality, ensuring reliability and maintainability of the Project Rules Explorer extension.
+The test suite provides robust coverage of all extension functionality, ensuring reliability and maintainability of the Agent Context Explorer extension.

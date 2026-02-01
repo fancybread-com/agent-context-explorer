@@ -1,9 +1,9 @@
 # Schemas: Standardized Parts
 
-> **ASDLC Pattern**: [Standardized Parts](https://asdlc.io/patterns/standardized-parts/)  
 > **Purpose**: Schema-enforced structure and validation for VS Code extension artifacts
+> **Pattern**: [Standardized Parts](https://asdlc.io/patterns/standardized-parts/) (ASDLC)
 
-This directory contains JSON Schema definitions for validation when using the Standardized Parts pattern in this VS Code extension.
+This directory contains JSON Schema definitions for validation when using structured artifact patterns in this VS Code extension.
 
 ---
 
@@ -76,4 +76,4 @@ The `/setup-asdlc` command automatically creates this directory if it detects sc
 **Status**: Optional  
 **Last Updated**: 2026-01-26  
 **Pattern**: ASDLC "Standardized Parts"  
-**Project**: VS Code Extension - Project Rules Explorer
+**Project**: VS Code Extension - Agent Context Explorer (ACE)

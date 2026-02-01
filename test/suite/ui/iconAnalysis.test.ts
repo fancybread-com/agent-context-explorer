@@ -125,11 +125,11 @@ describe('Icon Analysis for Real Rules', () => {
 					uri: vscode.Uri.file('/test/project-specific.mdc'),
 					fileName: 'project-specific.mdc',
 					metadata: {
-						description: 'Specific rules for the Project Rules Explorer extension',
+						description: 'Specific rules for the Agent Context Explorer extension',
 						globs: ['**/*.ts'],
 						alwaysApply: true
 					},
-					content: 'MDC file handling. Tree view structure. Project Rules Explorer specific rules.'
+					content: 'MDC file handling. Tree view structure. Agent Context Explorer specific rules.'
 				},
 				expectedIcon: 'folder-library'
 			},

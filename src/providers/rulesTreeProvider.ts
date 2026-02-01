@@ -58,7 +58,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 						collapsibleState: vscode.TreeItemCollapsibleState.None,
 						description: 'Add a project to get started',
 						command: {
-							command: 'projectRules.addProject',
+							command: 'ace.addProject',
 							title: 'Add Project'
 						}
 					} as RulesTreeItem];
@@ -530,7 +530,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 
 					// Add command to open in a view instead of expanding
 					item.command = {
-						command: 'projectRules.viewStateSection',
+						command: 'ace.viewStateSection',
 						title: 'View State Section',
 						arguments: [section.sectionKey || section.name.toLowerCase().replace(/\s+/g, '-'), section, element.project]
 					};

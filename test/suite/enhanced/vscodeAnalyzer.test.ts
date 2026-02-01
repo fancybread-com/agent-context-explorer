@@ -86,7 +86,7 @@ describe('VSCodeAnalyzer Test Suite', () => {
 		assert.ok(Array.isArray(context.activation), 'activation should be an array');
 		// This project has activation events
 		if (context.activation.length > 0) {
-			assert.ok(context.activation.some(e => e.includes('projectRules') || e.includes('onView')),
+			assert.ok(context.activation.some(e => e.includes('ace') || e.includes('onView')),
 				'should have project-specific activation events');
 		}
 	});

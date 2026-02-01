@@ -35,9 +35,9 @@ export function activate(context: vscode.ExtensionContext) {
 	isActivated = true;
 
 	// Create output channel for better logging visibility
-	outputChannel = vscode.window.createOutputChannel('Project Rules Explorer');
+	outputChannel = vscode.window.createOutputChannel('Agent Context Explorer');
 	outputChannel.show();
-	outputChannel.appendLine('=== Project Rules Explorer extension activated ===');
+	outputChannel.appendLine('=== Agent Context Explorer extension activated ===');
 
 	const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
 
@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
 	treeProvider = new RulesTreeProvider(new Map(), [], null);
 
 	// Register tree data provider
-	const treeProviderRegistration = vscode.window.createTreeView('projectRulesExplorer', {
+	const treeProviderRegistration = vscode.window.createTreeView('aceExplorer', {
 		treeDataProvider: treeProvider
 	});
 
@@ -86,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	// Register refresh command
-	const refreshCommand = vscode.commands.registerCommand('projectRules.refresh', async () => {
+	const refreshCommand = vscode.commands.registerCommand('ace.refresh', async () => {
 		outputChannel.appendLine('Manual refresh triggered');
 		await refreshData();
 	});
@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
 		outputChannel
 	);
 
-	outputChannel.appendLine('Project Rules Explorer extension setup complete');
+	outputChannel.appendLine('Agent Context Explorer extension setup complete');
 }
 
 // This method is called when your extension is deactivated
