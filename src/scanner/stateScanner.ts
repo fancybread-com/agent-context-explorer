@@ -1,4 +1,17 @@
 // State Scanner - Scan project for configuration files and patterns
+//
+// @deprecated This scanner uses optimistic inference to detect project characteristics
+// from dependency patterns. This approach is unreliable and is being replaced by
+// AsdlcArtifactScanner which scans explicit artifacts (AGENTS.md, specs/, schemas/).
+//
+// Migration path:
+// - FB-54: AsdlcArtifactScanner created for explicit artifact scanning
+// - Phase 3: Update tree view to use ASDLC artifacts
+// - Phase 5: Remove StateScanner after all consumers migrated
+//
+// DO NOT add new features to this class.
+// See: specs/scanners/spec.md for architecture and migration details.
+//
 import * as vscode from 'vscode';
 import { DotNetParser } from './parsers/dotnetParser';
 import { PythonParser } from './parsers/pythonParser';
@@ -71,6 +84,14 @@ export interface ProjectState {
 	agentGuidance?: AgentGuidance;
 }
 
+/**
+ * @deprecated Use AsdlcArtifactScanner instead. This class uses optimistic inference
+ * which produces unreliable results. AsdlcArtifactScanner scans explicit artifacts
+ * (AGENTS.md, specs/, schemas/) that developers intentionally maintain.
+ *
+ * @see AsdlcArtifactScanner for the replacement
+ * @see specs/scanners/spec.md for migration details
+ */
 export class StateScanner {
 	private dotnetParser: DotNetParser;
 	private pythonParser: PythonParser;

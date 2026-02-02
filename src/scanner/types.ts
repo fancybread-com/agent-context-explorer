@@ -308,3 +308,97 @@ export const OrchestrationPatterns = {
 	gke: ['@google-cloud/container']
 };
 
+// =============================================================================
+// ASDLC Artifact Types
+// =============================================================================
+
+/**
+ * Section parsed from AGENTS.md
+ */
+export interface AgentsMdSection {
+	level: number;
+	title: string;
+	startLine: number;
+	endLine: number;
+}
+
+/**
+ * Tech stack information from AGENTS.md
+ */
+export interface TechStackInfo {
+	languages: string[];
+	frameworks: string[];
+	buildTools: string[];
+	testing: string[];
+	packageManager?: string;
+}
+
+/**
+ * Operational boundaries from AGENTS.md (3-tier system)
+ */
+export interface OperationalBoundaries {
+	tier1Always: string[];  // Non-negotiable standards
+	tier2Ask: string[];     // High-risk operations requiring approval
+	tier3Never: string[];   // Safety limits - forbidden actions
+}
+
+/**
+ * AGENTS.md file information
+ */
+export interface AgentsMdInfo {
+	exists: boolean;
+	path?: string;
+	mission?: string;
+	corePhilosophy?: string;
+	sections: AgentsMdSection[];
+	techStack?: TechStackInfo;
+	operationalBoundaries?: OperationalBoundaries;
+}
+
+/**
+ * Individual spec file information
+ */
+export interface SpecFile {
+	domain: string;       // e.g., "user-authentication", "scanners"
+	path: string;
+	hasBlueprint: boolean;
+	hasContract: boolean;
+	lastModified?: string;
+}
+
+/**
+ * specs/ directory information
+ */
+export interface SpecsInfo {
+	exists: boolean;
+	path?: string;
+	specs: SpecFile[];
+}
+
+/**
+ * Individual schema file information
+ */
+export interface SchemaFile {
+	name: string;
+	path: string;
+	schemaId?: string;  // $id from JSON Schema
+}
+
+/**
+ * schemas/ directory information
+ */
+export interface SchemasInfo {
+	exists: boolean;
+	path?: string;
+	schemas: SchemaFile[];
+}
+
+/**
+ * Combined ASDLC artifacts scanning result
+ */
+export interface AsdlcArtifacts {
+	agentsMd: AgentsMdInfo;
+	specs: SpecsInfo;
+	schemas: SchemasInfo;
+	hasAnyArtifacts: boolean;
+}
