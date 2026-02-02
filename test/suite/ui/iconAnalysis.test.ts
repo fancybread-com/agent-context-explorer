@@ -1,7 +1,7 @@
 // Analysis test to understand current icon assignments
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { RulesTreeProvider } from '../../../src/providers/rulesTreeProvider';
+import { ProjectTreeProvider } from '../../../src/providers/projectTreeProvider';
 import { Rule } from '../../../src/scanner/rulesScanner';
 
 // Mock vscode module
@@ -27,10 +27,10 @@ const mockVscode = {
 Object.defineProperty(global, 'vscode', { value: mockVscode, writable: true });
 
 describe('Icon Analysis for Real Rules', () => {
-	let provider: RulesTreeProvider;
+	let provider: ProjectTreeProvider;
 
 	beforeEach(() => {
-		provider = new RulesTreeProvider(new Map(), [], null);
+		provider = new ProjectTreeProvider(new Map(), [], null);
 	});
 
 	it('should show what icon each rule gets', () => {

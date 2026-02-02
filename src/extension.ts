@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
-import { RulesTreeProvider } from './providers/rulesTreeProvider';
+import { ProjectTreeProvider } from './providers/projectTreeProvider';
 import { StateSectionContentProvider } from './providers/stateSectionContentProvider';
 import { RulesScanner } from './scanner/rulesScanner';
 import { StateScanner } from './scanner/stateScanner';
@@ -17,7 +17,7 @@ import { Rule } from './scanner/rulesScanner';
 import { ProjectState } from './scanner/stateScanner';
 import { Command } from './scanner/commandsScanner';
 
-let treeProvider: RulesTreeProvider;
+let treeProvider: ProjectTreeProvider;
 let rulesScanner: RulesScanner;
 let stateScanner: StateScanner;
 let commandsScanner: CommandsScanner;
@@ -57,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Initialize tree provider
 	outputChannel.appendLine('Initializing tree provider...');
-	treeProvider = new RulesTreeProvider(new Map(), [], null);
+	treeProvider = new ProjectTreeProvider(new Map(), [], null);
 
 	// Register tree data provider
 	const treeProviderRegistration = vscode.window.createTreeView('aceExplorer', {

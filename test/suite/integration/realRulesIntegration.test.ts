@@ -1,7 +1,7 @@
 // Integration tests using real rules from the repository
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { RulesTreeProvider } from '../../../src/providers/rulesTreeProvider';
+import { ProjectTreeProvider } from '../../../src/providers/projectTreeProvider';
 import { RulesScanner } from '../../../src/scanner/rulesScanner';
 import { Rule } from '../../../src/scanner/rulesScanner';
 import { ProjectDefinition } from '../../../src/types/project';
@@ -90,7 +90,7 @@ Object.defineProperty(global, 'vscode', {
 });
 
 describe('Real Rules Integration Tests', () => {
-	let provider: RulesTreeProvider;
+	let provider: ProjectTreeProvider;
 	let mockProject: ProjectDefinition;
 	let realRules: Rule[] = [];
 
@@ -128,7 +128,7 @@ describe('Real Rules Integration Tests', () => {
 			}
 		});
 
-		provider = new RulesTreeProvider(projectData, [mockProject], mockProject);
+		provider = new ProjectTreeProvider(projectData, [mockProject], mockProject);
 	});
 
 	describe('Real Rule Icon Detection', () => {

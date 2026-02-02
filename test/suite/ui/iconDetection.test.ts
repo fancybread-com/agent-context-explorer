@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
-// Mock the RulesTreeProvider class for testing icon detection
-class MockRulesTreeProvider {
+// Mock the ProjectTreeProvider class for testing icon detection
+class MockProjectTreeProvider {
 	private getContextAwareIcon(rule: { fileName: string; content: string; metadata: { type: string; description: string } }): string {
 		const fileName = rule.fileName.toLowerCase();
 		const content = rule.content.toLowerCase();
@@ -98,7 +98,7 @@ class MockRulesTreeProvider {
 }
 
 describe('Context-Aware Icon Detection Tests', () => {
-	const provider = new MockRulesTreeProvider();
+	const provider = new MockProjectTreeProvider();
 
 	describe('Testing Related Icons', () => {
 		it('should return beaker icon for test files', () => {

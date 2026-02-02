@@ -54,7 +54,7 @@ class XxxScanner {
 ```
 extension.ts
     │
-    ├── RulesTreeProvider
+    ├── ProjectTreeProvider
     │       │
     │       ├── RulesScanner
     │       ├── CommandsScanner

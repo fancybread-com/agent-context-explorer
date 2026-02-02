@@ -5,7 +5,7 @@ import { ProjectState } from '../scanner/stateScanner';
 import { Command } from '../scanner/commandsScanner';
 import { ProjectDefinition } from '../types/project';
 
-export interface RulesTreeItem extends vscode.TreeItem {
+export interface ProjectTreeItem extends vscode.TreeItem {
 	rule?: Rule;
 	commandData?: Command; // Command data (avoiding conflict with TreeItem's command property)
 	stateItem?: any;
@@ -16,7 +16,7 @@ export interface RulesTreeItem extends vscode.TreeItem {
 	project?: ProjectDefinition;
 }
 
-export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem> {
+export class ProjectTreeProvider implements vscode.TreeDataProvider<ProjectTreeItem> {
 	private _onDidChangeTreeData = new vscode.EventEmitter<void>();
 	readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
@@ -44,11 +44,11 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 		this.currentProject = currentProject;
 	}
 
-	getTreeItem(element: RulesTreeItem): RulesTreeItem {
+	getTreeItem(element: ProjectTreeItem): ProjectTreeItem {
 		return element;
 	}
 
-	async getChildren(element?: RulesTreeItem): Promise<RulesTreeItem[]> {
+	async getChildren(element?: ProjectTreeItem): Promise<ProjectTreeItem[]> {
 		try {
 			if (!element) {
 				// Root level: show all projects
@@ -61,14 +61,14 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 							command: 'ace.addProject',
 							title: 'Add Project'
 						}
-					} as RulesTreeItem];
+					} as ProjectTreeItem];
 				}
 
 				return this.projects.map((project) => {
 					const item = new vscode.TreeItem(
 						project.name,
 						project.active ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed
-					) as RulesTreeItem;
+					) as ProjectTreeItem;
 					item.project = project;
 					item.category = 'projects';
 					item.description = project.active ? 'Active' : project.path;
@@ -123,7 +123,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 
 				// Add a switch project option for non-active projects
 				const items = sections.map((section) => {
-					const item = new vscode.TreeItem(section.name, vscode.TreeItemCollapsibleState.Collapsed) as RulesTreeItem;
+					const item = new vscode.TreeItem(section.name, vscode.TreeItemCollapsibleState.Collapsed) as ProjectTreeItem;
 					item.category = section.id as 'rules' | 'state' | 'commands';
 					item.project = project;
 					item.description = section.description;
@@ -167,7 +167,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				const item = new vscode.TreeItem(
 					section.name,
 					vscode.TreeItemCollapsibleState.Collapsed
-				) as RulesTreeItem;
+				) as ProjectTreeItem;
 				item.category = section.id as 'commands-workspace' | 'commands-global';
 				item.project = element.project;
 				item.commandLocation = section.location;
@@ -185,14 +185,14 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 					label: 'No workspace commands found',
 					collapsibleState: vscode.TreeItemCollapsibleState.None,
 					description: 'Add commands to .cursor/commands directory'
-				} as RulesTreeItem];
+				} as ProjectTreeItem];
 			}
 
 			return commands.map((cmd: Command) => {
 				const item = new vscode.TreeItem(
 					cmd.fileName,
 					vscode.TreeItemCollapsibleState.None
-				) as RulesTreeItem;
+				) as ProjectTreeItem;
 				item.commandData = cmd;
 				item.category = 'commands-workspace';
 				item.project = element.project;
@@ -217,14 +217,14 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 					label: 'No global commands found',
 					collapsibleState: vscode.TreeItemCollapsibleState.None,
 					description: 'Add commands to ~/.cursor/commands directory'
-				} as RulesTreeItem];
+				} as ProjectTreeItem];
 			}
 
 			return commands.map((cmd: Command) => {
 				const item = new vscode.TreeItem(
 					cmd.fileName,
 					vscode.TreeItemCollapsibleState.None
-				) as RulesTreeItem;
+				) as ProjectTreeItem;
 				item.commandData = cmd;
 				item.category = 'commands-global';
 				item.project = element.project;
@@ -249,7 +249,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 					label: 'No rules found',
 					collapsibleState: vscode.TreeItemCollapsibleState.None,
 					description: 'Add rules to .cursor/rules directory'
-				} as RulesTreeItem];
+				} as ProjectTreeItem];
 			}
 
 			// Show all rules in a flat list
@@ -257,7 +257,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 				const item = new vscode.TreeItem(
 					rule.fileName,
 					vscode.TreeItemCollapsibleState.None
-				) as RulesTreeItem;
+				) as ProjectTreeItem;
 				item.rule = rule;
 				item.category = 'rules';
 				item.project = element.project;
@@ -285,7 +285,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 						label: 'No state data available',
 						collapsibleState: vscode.TreeItemCollapsibleState.None,
 						description: 'State not scanned yet'
-					} as RulesTreeItem];
+					} as ProjectTreeItem];
 				}
 
 				const stateItems: Array<{name: string, items: any[], icon: string, isEnhanced?: boolean, sectionKey?: string}> = [
@@ -521,7 +521,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 					const item = new vscode.TreeItem(
 						section.name,
 						vscode.TreeItemCollapsibleState.None // Don't expand, click to open
-					) as RulesTreeItem;
+					) as ProjectTreeItem;
 					item.category = 'state';
 					item.project = element.project;
 					item.description = `${section.items.length} items`;
@@ -544,7 +544,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<RulesTreeItem>
 			const errorItem = new vscode.TreeItem(
 				`Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
 				vscode.TreeItemCollapsibleState.None
-			) as RulesTreeItem;
+			) as ProjectTreeItem;
 			errorItem.tooltip = error instanceof Error ? error.stack : String(error);
 			return [errorItem];
 		}
