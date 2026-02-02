@@ -62,7 +62,7 @@ class MockExtension {
 			this.projectManager = new MockProjectManager();
 
 			// Initialize tree provider
-			this.treeProvider = new MockRulesTreeProvider(this.projectManager);
+			this.treeProvider = new MockProjectTreeProvider(this.projectManager);
 
 			// Create tree view
 			this.treeView = mockVscode.window.createTreeView('aceExplorer', {
@@ -185,7 +185,7 @@ class MockProjectManager {
 	}
 }
 
-class MockRulesTreeProvider {
+class MockProjectTreeProvider {
 	constructor(private projectManager: any) {}
 
 	refresh(): void {

@@ -61,7 +61,7 @@ class MockIntegratedSystem {
 		this.projectManager = new MockProjectManager();
 		this.rulesScanner = new MockRulesScanner();
 		this.stateScanner = new MockStateScanner();
-		this.treeProvider = new MockRulesTreeProvider(this.projectManager);
+		this.treeProvider = new MockProjectTreeProvider(this.projectManager);
 		this.fileWatcher = new MockFileWatcher();
 	}
 
@@ -248,7 +248,7 @@ class MockStateScanner {
 	}
 }
 
-class MockRulesTreeProvider {
+class MockProjectTreeProvider {
 	constructor(private projectManager: any) {}
 
 	initialize(): void {

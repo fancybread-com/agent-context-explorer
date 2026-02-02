@@ -1,7 +1,7 @@
 // Unit tests for Rule Labels Removal
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { RulesTreeProvider, RulesTreeItem } from '../../../src/providers/rulesTreeProvider';
+import { ProjectTreeProvider, ProjectTreeItem } from '../../../src/providers/projectTreeProvider';
 import { Rule } from '../../../src/scanner/rulesScanner';
 import { ProjectState } from '../../../src/scanner/stateScanner';
 import { ProjectDefinition } from '../../../src/types/project';
@@ -51,7 +51,7 @@ Object.defineProperty(global, 'vscode', {
 });
 
 describe('Rule Labels Removal', () => {
-	let provider: RulesTreeProvider;
+	let provider: ProjectTreeProvider;
 	let mockProject: ProjectDefinition;
 	let mockRule: Rule;
 	let mockProjectData: Map<string, { rules: Rule[], state: ProjectState, commands: any[], globalCommands: any[] }>;
@@ -96,7 +96,7 @@ describe('Rule Labels Removal', () => {
 			globalCommands: []
 		});
 
-		provider = new RulesTreeProvider(mockProjectData, [mockProject], mockProject);
+		provider = new ProjectTreeProvider(mockProjectData, [mockProject], mockProject);
 	});
 
 	describe('Individual Rule Display', () => {
