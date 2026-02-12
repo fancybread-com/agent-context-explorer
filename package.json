@@ -4,7 +4,7 @@
 	"description": "Provide rich project context to AI agents across multiple workspaces",
 	"version": "0.9.6",
 	"publisher": "fancybread-com",
-	"icon": "ace-icon.png",
+	"icon": "ace.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/fancybread-com/agent-context-explorer"
@@ -20,7 +20,7 @@
 		"context",
 		"agents",
 		"cursor",
-		"rules",
+		"asdlc",
 		"multi-project",
 		"mcp"
 	],

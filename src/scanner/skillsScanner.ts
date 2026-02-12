@@ -93,8 +93,8 @@ export class SkillsScanner {
 					const fileData = await vscode.workspace.fs.readFile(file);
 					const content = Buffer.from(fileData).toString('utf8');
 					
-					// Extract skill directory name
-					const pathParts = file.path.split(path.sep);
+					// Extract skill directory name (use forward slash since vscode.Uri.path always uses /)
+					const pathParts = file.path.split('/');
 					const skillDirName = pathParts[pathParts.length - 2] || 'unknown';
 
 					// Parse frontmatter if present
