@@ -1,0 +1,9 @@
+---
+globs: ["*.js", "*.ts"]
+description: "Valid rule"
+alwaysApply: false
+---
+
+# Valid rule
+
+This is a valid rule with globs.

@@ -87,7 +87,9 @@ describe('Rules Scanner Tests (real RulesScanner + vscode stub)', () => {
 			assert.ok(uri);
 			assert.ok(uri.fsPath);
 			assert.ok(uri.fsPath.endsWith('new-rule.mdc'));
-			assert.ok(uri.fsPath.includes('.cursor/rules'));
+			// Normalize path for cross-platform compatibility (\ on Windows, / on Unix)
+			const normalizedPath = uri.fsPath.replace(/\\/g, '/');
+			assert.ok(normalizedPath.includes('.cursor/rules'));
 		});
 
 		it('should create rule file with dot directory', async () => {
